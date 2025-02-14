@@ -25,16 +25,16 @@ pipeline {
                     docker run -d -p 8000:8000 --name jenkins $DOCKER_ID/$DOCKER_IMAGE:$DOCKER_TAG
                     '''
                 }                    
-                }
             }
+        }
         stage ('User Acceptance') {
             steps {
                 input {
                     message "Proceed to push to main"
                     ok "Yes"
                 }
-                }
             }
+        }
         stage ('Pushing and Merging') {
             parallel {
                 stage('Pushing Image') {
@@ -52,14 +52,11 @@ pipeline {
                     }
                 }
             }
-            }
-
-
         }
     }
     post {
       always {
         sh 'docker logout'
-      }
+        }
     }
 }
